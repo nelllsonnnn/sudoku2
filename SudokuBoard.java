@@ -20,6 +20,34 @@ public class SudokuBoard {
       }
    }
    
+   
+   private boolean checkRow() {
+      Set<String> checkNum = new HashSet<>();
+      
+      for(int r = 0; r < board.length; r++) {
+         for(int c = 0; c < board[r].length; c++) {
+            if(checkNum.contains(board[r][c])) {
+               return false;
+            }
+            checkNum.add(board[r][c]);
+         }
+      }
+      return true;
+   }
+   
+   private String[][] miniSquare(int spot) {
+      String[][] mini = new String[3][3];
+      for(int r = 0; r < 3; r++) {
+         for(int c = 0; c < 3; c++) {
+         // whoa - wild! This took me a solid hour to figure out (at least)
+         // This translates between the "spot" in the 9x9 Sudoku board
+         // and a new mini square of 3x3
+            mini[r][c] = board[(spot - 1) / 3 * 3 + r][(spot - 1) % 3 * 3 + c];
+         }
+      }
+      return mini;
+   }
+   
    public String toString() {
       String output = "";
       for (int r = 0; r < 9; r++) {
@@ -42,4 +70,5 @@ public class SudokuBoard {
     output += "  ---------------------\n";
     return output;
    }
+   
 }
