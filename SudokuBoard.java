@@ -19,12 +19,22 @@ public class SudokuBoard {
          System.out.println("File not found.");
       }
    }
-   
+
+   public boolean isValid() {
+      if(!checkRow()) {
+         return false;
+      }
+      for(int spot = 1; spot <= 9; spot++) {
+         if(!checkMini(spot)) {
+         return false;
+         }
+      }
+      return true;
+   }
    
    private boolean checkRow() {
-      Set<String> checkNum = new HashSet<>();
-      
       for(int r = 0; r < board.length; r++) {
+      Set<String> checkNum = new HashSet<>();
          for(int c = 0; c < board[r].length; c++) {
             if(checkNum.contains(board[r][c])) {
                return false;
@@ -37,6 +47,7 @@ public class SudokuBoard {
    
    private String[][] miniSquare(int spot) {
       String[][] mini = new String[3][3];
+      
       for(int r = 0; r < 3; r++) {
          for(int c = 0; c < 3; c++) {
          // whoa - wild! This took me a solid hour to figure out (at least)
@@ -46,6 +57,20 @@ public class SudokuBoard {
          }
       }
       return mini;
+   }
+   
+   private boolean checkMini(int spot) {
+      Set<String> seen = new HashSet<>();
+      String[][] mini = miniSquare(spot);
+      for(int r = 0; r < 3; r++) {
+         for(int c = 0; c < 3; c++) {
+            if(seen.contains(mini[r][c])) {
+               return false;
+            }
+            seen.add(board[r][c]);
+         }
+      }
+      return true;
    }
    
    public String toString() {
