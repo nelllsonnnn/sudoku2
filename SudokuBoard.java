@@ -1,6 +1,5 @@
 import java.util.*;
 import java.io.*;
-
 public class SudokuBoard {
    private String[][] board;
    
@@ -31,23 +30,44 @@ public class SudokuBoard {
       }
       return true;
    }
-   
+
    private boolean checkRow() {
       for(int r = 0; r < board.length; r++) {
       Set<String> checkNum = new HashSet<>();
+      
          for(int c = 0; c < board[r].length; c++) {
-            if(checkNum.contains(board[r][c])) {
-               return false;
-            }
+            if(!board[r][c].equals(".")) {
+               if(checkNum.contains(board[r][c])) {
+                  return false;
+               }
+          }
             checkNum.add(board[r][c]);
          }
       }
       return true;
    }
    
+   private boolean checkColumn(){
+      for(int c = 0; c < board[0].length; c++){
+         Set<String> seen = new HashSet<>();
+         
+         for(int r = 0; r < board.length; r++){
+            String val = board[r][c];
+            
+            if(!val.equals(".")){
+               if (seen.contains(val)){
+               return false;
+               }
+               seen.add(val);
+            }
+         }
+      }
+      return true;
+   }
+
    private String[][] miniSquare(int spot) {
       String[][] mini = new String[3][3];
-      
+
       for(int r = 0; r < 3; r++) {
          for(int c = 0; c < 3; c++) {
          // whoa - wild! This took me a solid hour to figure out (at least)
@@ -58,7 +78,7 @@ public class SudokuBoard {
       }
       return mini;
    }
-   
+
    private boolean checkMini(int spot) {
       Set<String> seen = new HashSet<>();
       String[][] mini = miniSquare(spot);
@@ -72,7 +92,7 @@ public class SudokuBoard {
       }
       return true;
    }
-   
+
    public String toString() {
       String output = "";
       for (int r = 0; r < 9; r++) {
@@ -95,5 +115,5 @@ public class SudokuBoard {
     output += "  ---------------------\n";
     return output;
    }
-   
+
 }
