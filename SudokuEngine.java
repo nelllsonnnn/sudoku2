@@ -3,6 +3,8 @@ public class SudokuEngine {
     public static void main(String[] args) {
         SudokuBoard board = new SudokuBoard("data1.sdk");
         System.out.println(board);
+        System.out.println(board.isValid());
+        System.out.println(board.isSolved());
     }
 
 }
@@ -23,6 +25,8 @@ public class SudokuEngine {
  |   8 1 |       | 2 4   |
  | 7     | 4   2 |     1 |
    ---------------------
+
+
 
 
 */
