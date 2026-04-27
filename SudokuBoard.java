@@ -64,6 +64,24 @@ public class SudokuBoard {
       }
       return true;
    }
+   
+    
+   private boolean checkData(){ //to make sure the cells go from 1 to 9 or "."
+      Set<String> allowedValues = new HashSet<String>();
+      allowedValues.add(".");
+      
+      for (int i = 1; i < board.length; i++) {
+         allowedValues.add("" + 1);
+      }
+      
+      for(int r = 0; r < board.length; r++){
+         for (int c = 0; c < board[r].length; c++){
+            return false;
+         }
+      }
+      return false;
+
+   }
 
    private String[][] miniSquare(int spot) {
       String[][] mini = new String[3][3];
@@ -119,8 +137,7 @@ public class SudokuBoard {
         }
       }
       return isValid();
-   }
-
+   } 
 
    public String toString() {
       String output = "";
