@@ -82,16 +82,45 @@ public class SudokuBoard {
    private boolean checkMini(int spot) {
       Set<String> seen = new HashSet<>();
       String[][] mini = miniSquare(spot);
-      for(int r = 0; r < 3; r++) {
-         for(int c = 0; c < 3; c++) {
-            if(seen.contains(mini[r][c])) {
-               return false;
-            }
-            seen.add(board[r][c]);
-         }
+      
+      for(int r = 0; r < mini.length; r++) {
+         for(int c = 0; c < mini[r].length; c++) {
+            String val = mini[r][c];
+            
+            if (!val.equals(".")){
+               if(seen.contains(mini[r][c])) {
+                  return false;
+               }
+               seen.add(val);
+            }       
+          }
       }
       return true;
    }
+   
+   public boolean isSolved() {
+      Map<String, Integer> counts = new HashMap<String, Integer>();
+      
+      for(int r = 0; r < board.length; r++) { //add board.length
+         for(int c = 0; c < board[r].length; c++) {
+            String num = board[r][c];
+            
+            if(!counts.containsKey(num)) {
+               counts.put(num, 1);
+            } else {
+               counts.put(num, counts.get(num) + 1);
+            }
+         }
+      }
+      for (int digit = 1; digit <= board.length; digit++) {
+        String key = "" + digit;
+        if (!counts.containsKey(key) || counts.get(key) != board.length) {
+            return false;
+        }
+      }
+      return isValid();
+   }
+
 
    public String toString() {
       String output = "";
